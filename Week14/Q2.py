@@ -37,6 +37,7 @@ def check_headers(url):
                 results.append({"header": header, "present": False, "value": "MISSING"})
         return results
     except Exception as e:
+        print(f" Error: {e}")
         return []
 
 
@@ -49,13 +50,12 @@ def check_headers(url):
 #       Increment missing_count
 #   Print f"  Missing {missing_count} of {len(results)} security headers!"
 def generate_report(url, results):
-    print(f"\n--- Report for {url} ---")
     missing_count = 0
-    for result in results:
-        if result["present"]:
-            print(f"  ✓ {result['header']}: {result['value']}")
+    for r in results:
+        if r["present"]:
+            print(f"  ✓ {r['header']}: {r['value']}")
         else:
-            print(f"  ✗ {result['header']}: MISSING — {REQUIRED_HEADERS[result['header']]}")
+            print(f"  ✗ {r['header']}: MISSING — {REQUIRED_HEADERS[r['header']]}")
             missing_count += 1
     print(f"  Missing {missing_count} of {len(results)} security headers!")
 
